@@ -4,6 +4,7 @@
 
 insf* _insf = NULL;
 registers* _registers = NULL;
+char memory[4096 * 4];
 
 #include "functions.h"
 #include "instructions.h"
@@ -60,6 +61,7 @@ int main(int argc, char const *argv[])
         exit(1);
     }
     init();
+    
     binary_read(argv[1]);
 
     end();
