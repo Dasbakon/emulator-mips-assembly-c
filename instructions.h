@@ -6,18 +6,18 @@ void instruction_r(int instruction){
     _insf->shamt = instruction >>6;
     _insf->funct = instruction;
 
-    switch (_insf->funct){
+    switch ($funct){
         case 32:
             add();
             break;
         case 34:
             sub();
             break;
+        case 36:
+            and();
         default:
             break;
-    }
-
-    printf("rs = %d\t rt = %d\t rd = %d\t shamt = %d\t funct = %d\n", _insf->rs, _insf->rt, _insf->rd, _insf->shamt, _insf->funct);
+    }    
 }
 
 void instruction_i(int instruction){
@@ -26,7 +26,7 @@ void instruction_i(int instruction){
     _insf->rt = instruction >> 16;
     _insf->immediate = instruction;
 
-    switch (_insf->opcode){
+    switch ($opcode){
         case 0:
             break;
         case 8:
@@ -35,13 +35,9 @@ void instruction_i(int instruction){
         default:
             break;
     }
-
-    printf("rs = %d\t rt = %d\t immediate = %d\n", _insf->rs, _insf->rt, _insf->immediate);
 }
 
 void instruction_j(int instruction){
     printf("instruction j\n");
     _insf->jump_target = instruction;
-
-    printf("jump_target = %d\n", _insf->jump_target);
 }

@@ -8,6 +8,7 @@
 #define $reg_hilo _registers->hilo
 
 /*-----------------------------Type R-----------------------------------*/
+
 void add(){
     $rd = $rs + $rt;
 }

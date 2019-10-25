@@ -16,8 +16,8 @@ void init(){
     int i;
     for (i = 0; i < 32; i++){
         _registers->rts[i] = 0;
+        memory[i] = 0;
     }
-    
 }
 
 void end(){
@@ -34,7 +34,7 @@ void binary_read(const char* aux){
         exit(1);
     }
     while(fread(&instruction, sizeof(int), 1, file)){
-        switch (_insf->opcode = instruction >> 26)
+        switch ($opcode = instruction >> 26)
         {
             case 0:
                 instruction_r(instruction);
@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
         exit(1);
     }
     init();
-    
+
     binary_read(argv[1]);
 
     end();
