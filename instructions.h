@@ -47,7 +47,7 @@ void instruction_r(int instruction){
             slt();
             break;
         default:
-            print("Funct nao encontrado\n");
+            printf("Funct nao encontrado\n");
             break;
     }    
 }
