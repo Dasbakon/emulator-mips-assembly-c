@@ -7,6 +7,30 @@ void instruction_r(int instruction){
     _insf->funct = instruction;
 
     switch ($funct){
+        case 0:
+            sll();
+            break;
+        case 2:
+            srl();
+            break;
+        case 3:
+            sra();
+            break;
+        case 8:
+            jr();
+            break;
+        case 16:
+            mfhi();
+            break;
+        case 18:
+            mflo();
+            break;
+        case 24:
+            mult();
+            break;
+        case 26:
+            _div();
+            break;
         case 32:
             add();
             break;
@@ -15,35 +39,54 @@ void instruction_r(int instruction){
             break;
         case 36:
             and();
-        default:
             break;
-    }
-
-    printf("rs = %d\t rt = %d\t rd = %d\t shamt = %d\t funct = %d\n", _insf->rs, _insf->rt, _insf->rd, _insf->shamt, _insf->funct);
+        case 37:
+            or();
+            break;
+        case 42:
+            slt();
+            break;
+        default:
+            printf("Funct nao encontrado\n");
+            break;
+    }    
 }
 
 void instruction_i(int instruction){
     printf("instruction i\n");
-    $rs = instruction >> 21;
-    $rt = instruction >> 16;
-    $imm = instruction;
+    _insf->rs = instruction >> 21;
+    _insf->rt = instruction >> 16;
+    _insf->immediate = instruction;
 
     switch ($opcode){
-        case 0:
+        case 4:
+            beq();
+            break;
+        case 5:
+            bne();
             break;
         case 8:
             addi();
             break;
+        case 9:
+            addiu();
+            break;
+        case 10:
+            slti();
+            break;
+        case 12:
+            andi();
+            break;
+        case 13:
+            ori();
+            break;
         default:
+            printf("opcode nao encontrado\n");
             break;
     }
-
-    printf("rs = %d\t rt = %d\t immediate = %d\n", _insf->rs, _insf->rt, _insf->immediate);
 }
 
 void instruction_j(int instruction){
     printf("instruction j\n");
     _insf->jump_target = instruction;
-
-    printf("jump_target = %d\n", _insf->jump_target);
 }

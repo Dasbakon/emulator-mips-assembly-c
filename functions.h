@@ -6,8 +6,10 @@
 #define $shamt    _insf->shamt
 #define $funct    _insf->funct
 #define $reg_hilo _registers->hilo
+#define $pc       _registers->pc
 
 /*-----------------------------Type R-----------------------------------*/
+
 void add(){
     $rd = $rs + $rt;
 }
@@ -16,9 +18,17 @@ void and(){
     $rd = $rs & $rt;
 }
 
-void div(){
+void _div(){
     $reg_hilo.lo = $rs / $rt;
     $reg_hilo.hi = $rs % $rt;
+}
+
+void jr(){
+    $pc = $rs;
+}
+
+void mfhi(){
+    $rd = $reg_hilo.hi;
 }
 
 void mflo(){
@@ -45,10 +55,16 @@ void sra(){
 
 }
 
+void srl(){
+    $rd = $rt >> $shamt;
+}
+
 void sub(){
     $rd = $rs - $rt;
 }
+
 /*-----------------------------Type I-----------------------------------*/
+
 void addi(){
     $rt = $rs + $imm; 
 }
@@ -61,12 +77,24 @@ void andi(){
     $rd = $rs & $imm;
 }
 
+void beq(){
+    if($rs == $rt){
+        $pc = $pc + 4 + ($imm * 4);
+    }
+}
+
+void bne(){
+    if($rs != $rt){
+        $pc = $pc + 4 + ($imm * 4);
+    }
+}
+
 void lui(){
     $rd = $imm << 16;
 }
 
 void lw(){
-    $rt = memory[];
+    $rt = memory[0];
 }
 
 void ori(){

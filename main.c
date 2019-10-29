@@ -10,19 +10,14 @@ char memory[4096 * 4];
 #include "instructions.h"
 #include "print_registers.h"
 
-//const int $gp = 
-
 void init(){
     _insf = malloc(sizeof(insf));
     _registers = malloc(sizeof(registers));
     int i;
     for (i = 0; i < 32; i++){
         _registers->rts[i] = 0;
-    }
-    for (i = 0; i < 4096 * 4; i++){
         memory[i] = 0;
     }
-    
 }
 
 void end(){
@@ -66,6 +61,7 @@ int main(int argc, char const *argv[])
         exit(1);
     }
     init();
+
     binary_read(argv[1]);
 
     end();
