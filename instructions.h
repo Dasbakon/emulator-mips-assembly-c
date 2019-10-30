@@ -1,9 +1,8 @@
 void instruction_r(int instruction){
-    printf("instruction r\n");
     _insf->rs = instruction >> 21;
     _insf->rt = instruction >> 16;
     _insf->rd = instruction >> 11;
-    _insf->shamt = instruction >>6;
+    _insf->shamt = instruction >> 6;
     _insf->funct = instruction;
 
     switch ($funct){
@@ -53,7 +52,6 @@ void instruction_r(int instruction){
 }
 
 void instruction_i(int instruction){
-    printf("instruction i\n");
     _insf->rs = instruction >> 21;
     _insf->rt = instruction >> 16;
     _insf->immediate = instruction;
