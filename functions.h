@@ -94,7 +94,7 @@ void lui(){
 }
 
 void lw(){
-    $rt = memory[0];
+   
 }
 
 void ori(){
