@@ -1,12 +1,12 @@
-#define $opcode   _insf->opcode
-#define $rd       _registers->rts[_insf->rd]
-#define $rs       _registers->rts[_insf->rs]
-#define $rt       _registers->rts[_insf->rt]
-#define $imm      _insf->immediate
-#define $shamt    _insf->shamt
-#define $funct    _insf->funct
-#define $reg_hilo _registers->hilo
-#define $pc       _registers->pc
+#define $opcode   insf->opcode
+#define $rd       registers->rts[insf->rd]
+#define $rs       registers->rts[insf->rs]
+#define $rt       registers->rts[insf->rt]
+#define $imm      insf->immediate
+#define $shamt    insf->shamt
+#define $funct    insf->funct
+#define $reg_hilo registers->hilo
+#define $pc       registers->pc
 
 /*-----------------------------Type R-----------------------------------*/
 
@@ -24,7 +24,7 @@ void _div(){
 }
 
 void jr(){
-    $pc = $rs;
+    $pc = $rs / 4;
 }
 
 void mfhi(){
@@ -79,13 +79,13 @@ void andi(){
 
 void beq(){
     if($rs == $rt){
-        $pc = $pc + 4 + ($imm * 4);
+        $pc = $pc + $imm;
     }
 }
 
 void bne(){
     if($rs != $rt){
-        $pc = $pc + 4 + ($imm * 4);
+        $pc = $pc + $imm;
     }
 }
 
@@ -94,7 +94,7 @@ void lui(){
 }
 
 void lw(){
-   
+   $rt = memory[(($rs + $imm) / 4)].raw;
 }
 
 void ori(){
@@ -104,3 +104,9 @@ void ori(){
 void slti(){
     $rd = ($rs < $imm)? 1 : 0;
 }
+
+void sw(){
+    memory[(($rs + $imm) / 4)].raw = $rt;
+}
+
+/*-----------------------------Type J-----------------------------------*/

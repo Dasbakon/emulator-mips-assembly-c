@@ -1,9 +1,9 @@
 void instruction_r(int instruction){
-    _insf->rs = instruction >> 21;
-    _insf->rt = instruction >> 16;
-    _insf->rd = instruction >> 11;
-    _insf->shamt = instruction >> 6;
-    _insf->funct = instruction;
+    insf->rs = instruction >> 21;
+    insf->rt = instruction >> 16;
+    insf->rd = instruction >> 11;
+    insf->shamt = instruction >> 6;
+    insf->funct = instruction;
 
     switch ($funct){
         case 0:
@@ -46,15 +46,15 @@ void instruction_r(int instruction){
             slt();
             break;
         default:
-            printf("Funct nao encontrado\n");
+            printf("Funct nao encontrado %d\n", instruction);
             break;
     }    
 }
 
 void instruction_i(int instruction){
-    _insf->rs = instruction >> 21;
-    _insf->rt = instruction >> 16;
-    _insf->immediate = instruction;
+    insf->rs = instruction >> 21;
+    insf->rt = instruction >> 16;
+    insf->immediate = instruction;
 
     switch ($opcode){
         case 4:
@@ -78,13 +78,19 @@ void instruction_i(int instruction){
         case 13:
             ori();
             break;
+        case 35:
+            lw();
+            break;
+        case 43:
+            sw();
+            break;
         default:
-            printf("opcode nao encontrado\n");
+            printf("opcode nao encontrado %d\n", instruction);
             break;
     }
 }
 
 void instruction_j(int instruction){
     printf("instruction j\n");
-    _insf->jump_target = instruction;
+    insf->jump_target = instruction;
 }
