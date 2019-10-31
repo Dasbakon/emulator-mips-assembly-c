@@ -1,6 +1,6 @@
 #makefile
 
-all: main
+all: emulator
 
-main: main.c
-	gcc main.c -o main -Wall -ansi -pedantic -std=c11
+emulator: emulator.c
+	gcc emulator.c -o emulator -Wall -ansi -pedantic -std=c11

@@ -5,9 +5,9 @@ typedef struct instruction_fields{
     unsigned int rd:5;
     unsigned int shamt:5;
     unsigned int funct:6;
-    unsigned short immediate;
+    short immediate;
     unsigned int jump_target:26;
-}insf;
+}_insf;
 
 typedef union hilo{
     long long int raw;
@@ -15,13 +15,13 @@ typedef union hilo{
         unsigned int lo;
         unsigned int hi;
     };
-}hilo;
+}_hilo;
  
 typedef struct registers{
     int rts[31];
-    hilo hilo;
+    _hilo hilo;
     int pc;
-}registers;
+}_registers;
 
 typedef union _memory{
     int raw;
