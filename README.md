@@ -1,4 +1,4 @@
-EMULADOR MIPS
+#Markdown EMULADOR MIPS
 
 Programa executável: emulator.exe
     obs: na hora de executar devo passar dois arquivos no parametro ex: ./main text.bin data.bin
