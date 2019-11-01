@@ -1,4 +1,5 @@
-Sorted Array: 
+Funct nao encontrado 12
+Funct nao encontrado 12
 $0	 0x00000000
 $1	 0x00000000
 $2	 0x0000000a
