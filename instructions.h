@@ -1,4 +1,5 @@
 void instruction_r(int instruction){
+    //printf("instruction r %d\n", $pc * 4);
     insf->rs = instruction >> 21;
     insf->rt = instruction >> 16;
     insf->rd = instruction >> 11;
@@ -18,6 +19,9 @@ void instruction_r(int instruction){
         case 8:
             jr();
             break;
+        case 12:
+            syscall();
+            break;
         case 16:
             mfhi();
             break;
@@ -33,6 +37,9 @@ void instruction_r(int instruction){
         case 32:
             add();
             break;
+        case 33:
+            addu();
+            break;
         case 34:
             sub();
             break;
@@ -46,12 +53,13 @@ void instruction_r(int instruction){
             slt();
             break;
         default:
-            printf("Funct nao encontrado %d\n", instruction);
+            printf("Funct nao encontrado %d\t %d\n", instruction, $funct);
             break;
     }    
 }
 
 void instruction_i(int instruction){
+    //printf("instruction i %d\n", $pc * 4);
     insf->rs = instruction >> 21;
     insf->rt = instruction >> 16;
     insf->immediate = instruction;
@@ -91,6 +99,14 @@ void instruction_i(int instruction){
 }
 
 void instruction_j(int instruction){
-    printf("instruction j\n");
+    //printf("instruction j %d\n", $pc * 4);
     insf->jump_target = instruction;
+
+    if($opcode == 2){
+        j();
+    }else if($opcode == 3){
+        jal();
+    }else{
+        printf("Intrucao n encontrada tipo j\n");
+    }
 }

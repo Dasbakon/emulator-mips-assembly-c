@@ -19,8 +19,8 @@ void init(){
     for (i = 0; i < 32; i++){
         registers->rts[i] = 0;
     }
-    registers->rts[28] = 0x1800; /* registrador gp eh inicializado com 0x1800 */
-    registers->rts[29] = 0x3ffc; /* regitrador sp eh inicializado com 0x3ffc */
+    registers->rts[28] = 0x1800 / 4; /* registrador gp eh inicializado com 0x1800 */
+    registers->rts[29] = 0x3ffc / 4; /* regitrador sp eh inicializado com 0x3ffc */
 
     for (i = 0; i < 1024; i++){
         memory[i].raw = 0;
@@ -29,6 +29,7 @@ void init(){
 
 /* Funcao que finaliza variaveis alocadas dinamicamente entre outras coisas */
 void end(){
+    printf("\n");
     output();
     free(insf);
     free(registers);
@@ -68,7 +69,6 @@ void emulator(const char* files[]){
             memory[index].raw = aux;
             index++;
         }
-
         if(index >= 1024){
             /*
                 Ocorre quando a demo (text.bin) tenta acessar (para leitura ou escrita)
@@ -79,9 +79,8 @@ void emulator(const char* files[]){
         }
     }else{
         printf("Erro ao tentar abrir o arquivo text.bin");
-        end();
+        exit(1);
     }
-
     for ( ; $pc < index; $pc++){
         switch ($opcode  = memory[$pc].raw >> 26){
             case 0:

@@ -1,8 +1,8 @@
-#Aaron
 .data
 
 numbers: .word 8, 100, 0, 3, 7, 9, 2, 7, -3, 0		#create array which holds numbers
 message: .asciiz "Sorted Array: "			#message to be printed
+msg: .asciiz "teste"
 
 .text
 main:
@@ -43,6 +43,24 @@ increment:
 	li $s1, 0 					#reset s1 to 0
 
 	bne  $s0, $s6, loop				# go back through loop with s1 = s1 + 1
+	
+print:
+	beq $t3, $t4, final				#if t3 = t4 go to final
+	
+	lw $t5, 0($s7)					#load from numbers
+	
+	li $v0, 1					#print the number
+	move $a0, $t5
+	syscall
+
+	li $a0, 32					#print space
+	li $v0, 11
+	syscall
+	
+	addi $s7, $s7, 4				#increment through the numbers
+	addi $t3, $t3, 1				#increment counter
+
+	j print
 
 final:	
 	li $v0, 10					#end program
