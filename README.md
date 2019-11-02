@@ -1,16 +1,16 @@
-EMULADOR MIPS
+<h1>EMULADOR MIPS</h1>
 
-Programa executável: emulator.exe
-    obs: na hora de executar devo passar dois arquivos no parametro ex: ./main text.bin data.bin
+Programa executável: emulator.exe </br>
+    obs: na hora de executar devo passar dois arquivos no parametro ex: ./main text.bin data.bin </br>
 
-O arquivo text.bin deve conter as instruções mips em binário e o data.bin deve conter os endereços de memória
+O arquivo text.bin deve conter as instruções mips em binário e o data.bin deve conter os endereços de memória </br>
 
-Comando para compilar no terminal:
-    gcc emulator.c -o emulator -Wall -ansi -pedantic -std=c11
-    ou
-    make
+Comando para compilar no terminal:</br>
+    gcc emulator.c -o emulator -Wall -ansi -pedantic -std=c11</br>
+    ou</br>
+    make</br>
 
-Memoria: endereçada por palavra 4 bytes, mas divida por byte
+Memoria: endereçada por palavra 4 bytes, mas divida por byte</br>
 
     typedef union _memory{
         int raw;
