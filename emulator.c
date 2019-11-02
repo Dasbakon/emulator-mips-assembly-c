@@ -19,8 +19,8 @@ void init(){
     for (i = 0; i < 32; i++){
         registers->rts[i] = 0;
     }
-    registers->rts[28] = 0x1800 / 4; /* registrador gp eh inicializado com 0x1800 */
-    registers->rts[29] = 0x3ffc / 4; /* regitrador sp eh inicializado com 0x3ffc */
+    registers->rts[28] = 0x1800; /* registrador gp eh inicializado com 0x1800 */
+    registers->rts[29] = 0x3ffc; /* regitrador sp eh inicializado com 0x3ffc */
 
     for (i = 0; i < 1024; i++){
         memory[i].raw = 0;
@@ -74,7 +74,7 @@ void emulator(const char* files[]){
                 Ocorre quando a demo (text.bin) tenta acessar (para leitura ou escrita)
                 um endereço na memória que está reservado para outro programa. 
             */
-            printf("segmentation fault text\n");
+            printf("Error: segmentation fault text\n");
             end();
         }
     }else{

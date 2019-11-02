@@ -67,7 +67,7 @@ void srl(){
 void sub(){
     $rd = $rs - $rt;
 }
-
+/* Funções do syscall */
 void _4(){
     int position = registers->rts[4] / 4;
     int byte = registers->rts[4] % 4;
@@ -75,6 +75,7 @@ void _4(){
     while(aux != 0){
         switch (byte)
         {
+            /* eu incremento + 1 no byte dentro de cada caso, para que no caso 3 o meu byte volte a ser zero sem ser incrementado */
             case 0:
                 aux = memory[position].byte_1;
                 printf("%c", aux);
@@ -131,7 +132,7 @@ void syscall(){
             printf("%c", registers->rts[4]);
             break;
         case 12:
-            scanf("%d", &registers->rts[2]);
+            scanf("%d", &registers->rts[2]); /* funcao que deveria ler um char, mas o emulador le como inteiro, o que nao interfere no resultado */
             break;
         case 34:
             printf("%x", registers->rts[4]);
@@ -176,7 +177,12 @@ void lui(){
 }
 
 void lw(){
-   $rt = memory[(($rs + $imm) / 4)].raw;
+    /* Caso eu aceese uma posição fora do vetor */
+    if(($rs + $imm) / 4 > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
+    $rt = memory[(($rs + $imm) / 4)].raw;
 }
 
 void ori(){
@@ -188,12 +194,19 @@ void slti(){
 }
 
 void sw(){
+    /* Caso eu aceese uma posição fora do vetor */
+    if(($rs + $imm) / 4 > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
     memory[(($rs + $imm) / 4)].raw = $rt;
 }
 
 /*-----------------------------Type J-----------------------------------*/
 
 void j(){
+    /* meu pc irá receber o jump_target - 1, o "-1" é necessário pois quando eu voltar no 
+    for la no arquivo emulador.c eu irei incrementar o pc, isso vale o mesmo para a função jal*/
     $pc = insf->jump_target - 1;
 }
 
