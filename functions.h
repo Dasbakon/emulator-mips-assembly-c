@@ -77,28 +77,29 @@ void _4(){
         {
             case 0:
                 aux = memory[position].byte_1;
-                printf("%c", aux);
+                
                 byte++;
                 break;
             case 1:
                 aux = memory[position].byte_2;
-                printf("%c", aux);
+                
                 byte++;
                 break;
             case 2:
                 aux = memory[position].byte_3;
-                printf("%c", aux);
+                
                 byte++;
                 break;
             case 3:
                 aux = memory[position].byte_4;
-                printf("%c", aux);
+                
                 position++;
                 byte = 0;
                 break;
             default:
                 break;
         }
+        if(aux != '\0'){ printf("%c", aux); }
     }
 }
 
