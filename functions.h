@@ -164,7 +164,7 @@ void addi(){
 }
 
 void addiu(){
-    $rt = $rs + abs($imm);
+    $rt = $rs + $imm;
 }
 
 void andi(){
@@ -196,21 +196,20 @@ void lbu(){
     int byte = ($rs + $imm) % 4;
     switch (byte){
         case 0:
-            $rt = memory[aux].byte_1;
+            $rt = abs(memory[aux].byte_1);
             break;
         case 1:
-            $rt = memory[aux].byte_2;
+            $rt = abs(memory[aux].byte_2);
             break;
         case 2:
-            $rt = memory[aux].byte_3;
+            $rt = abs(memory[aux].byte_3);
             break;
         case 3:
-            $rt = memory[aux].byte_4;
+            $rt = abs(memory[aux].byte_4);
             break;
         default:
             break;
-    }
-    $rt = abs($rt);
+    }   
 }
 
 void lw(){
