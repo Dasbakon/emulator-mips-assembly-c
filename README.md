@@ -60,8 +60,11 @@ Comando para compilar no terminal:</br>
            - srl
            - syscall:
                - 1 imprime inteiro
+               - 2 imprime float
                - 4 imprime string
                - 5 le inteiro
+               - 6 le float
+               - 8 le string
                - 10 exit
                - 11 imprima char
                - 12 le char
