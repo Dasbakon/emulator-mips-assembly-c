@@ -72,14 +72,19 @@ Comando para compilar no terminal:</br>
         Tipo I:
             - addi
             - addiu
+            - add.s
             - andi
             - beq
             - bne
             - lui
+            - lbu
             - lw
+            - lwcl
             - ori
             - slti
+            - sb
             - sw
+            - swcl
   
         Tipo J:
             - j
