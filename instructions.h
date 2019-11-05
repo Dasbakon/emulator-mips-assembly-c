@@ -86,14 +86,26 @@ void instruction_i(int instruction){
         case 13:
             ori();
             break;
+        case 17:
+            insf->rd = instruction >> 11;
+            insf->shamt = instruction >> 6;
+            insf->funct = instruction;
+            float_s();
+            break;
         case 35:
             lw();
             break;
         case 43:
             sw();
             break;
+        case 49:
+            lwcl();
+            break;
+        case 57:
+            swcl();
+            break;
         default:
-            printf("opcode nao encontrado %d\n", instruction);
+            printf("opcode nao encontrado %d %u\n", instruction, $opcode);
             break;
     }
 }

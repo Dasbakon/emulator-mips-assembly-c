@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "structs.h"
 
 _insf* insf = NULL;
 _registers* registers = NULL;
 _memory* memory = NULL;
+float comproc[32];
 
 #include "functions.h"
 #include "instructions.h"
@@ -18,6 +20,7 @@ void init(){
     int i;
     for (i = 0; i < 32; i++){
         registers->rts[i] = 0;
+        comproc[i] = 0.0;
     }
     registers->rts[28] = 0x1800; /* registrador gp eh inicializado com 0x1800 */
     registers->rts[29] = 0x3ffc; /* regitrador sp eh inicializado com 0x3ffc */

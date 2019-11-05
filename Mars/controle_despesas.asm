@@ -8,7 +8,7 @@ msg1: .ascii "\n1 - REGISTRAR DESPESA."
  "\n5 - EXIBIR GASTO POR CATEGORIA."
  "\n6 - EXIBIR RANKING DE DESPESAS."
  "\n0 - SAIR."
- "\n\n DIGITE A OPÇÃO DESEJADA: \0"
+ "\n\n DIGITE A OPCAO DESEJADA: \0"
 
 msg2: .ascii "\n DIGITE A CATEGORIA: \0"
 
@@ -22,13 +22,13 @@ msg6: .ascii " DIGITE O ANO: \0"
 
 msg7:  .ascii "\n DIGITE O CODIGO DA DESPESA QUE DESEJA EXCLUIR: \0"
 
-msg8:   .ascii "\n ID NÃO ENCONTRADO!!! \0"
+msg8:   .ascii "\n ID NAO ENCONTRADO!!! \0"
 
 msg9:   .ascii "\n gasto mensal nulo \0"
 
-msgDiax: .ascii " MÊS/ANO:\0"
+msgDiax: .ascii " MES/ANO:\0"
 
-msgCodigo: .ascii "\n CÓDIGO (ID): \0"
+msgCodigo: .ascii "\n CODIGO (ID): \0"
 
 msgCategoria: .ascii " CATEGORIA: \0"
 

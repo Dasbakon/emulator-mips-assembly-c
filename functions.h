@@ -73,34 +73,38 @@ void _4(){
     int byte = registers->rts[4] % 4;
     char aux = 1;
     while(aux != 0){
-        switch (byte)
-        {
+        switch (byte){
             /* eu incremento + 1 no byte dentro de cada caso, para que no caso 3 o meu byte volte a ser zero sem ser incrementado */
             case 0:
                 aux = memory[position].byte_1;
-                printf("%c", aux);
                 byte++;
                 break;
             case 1:
                 aux = memory[position].byte_2;
-                printf("%c", aux);
                 byte++;
                 break;
             case 2:
                 aux = memory[position].byte_3;
-                printf("%c", aux);
                 byte++;
                 break;
             case 3:
                 aux = memory[position].byte_4;
-                printf("%c", aux);
                 position++;
                 byte = 0;
                 break;
             default:
                 break;
         }
+        if(aux != '\0'){
+            printf("%c", aux);
+        }
     }
+}
+
+void _8(){
+    int position = registers->rts[4] / 4;
+    scanf("%*c");
+    fgets(&memory[position].byte_1, registers->rts[5], stdin);
 }
 
 void _35(){
@@ -117,13 +121,20 @@ void syscall(){
         case 1:
             printf("%d", registers->rts[4]);
             break;
+        case 2:
+            printf("%.2f", comproc[12]);
+            break;
         case 4:
             _4();
             break;
         case 5:
             scanf("%d", &registers->rts[2]);
             break;
+        case 6:
+            scanf("%f", &comproc[0]);
+            break;
         case 8:
+            _8();
             break;
         case 10:
             end();
@@ -185,8 +196,31 @@ void lw(){
     $rt = memory[(($rs + $imm) / 4)].raw;
 }
 
+void lwcl(){
+    /* Caso eu aceese uma posição fora do vetor */
+    if(($rs + $imm) / 4 > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
+    comproc[insf->rt] = memory[(($rs + $imm) / 4)].raw;
+}
+
 void ori(){
     $rd = $rs | $imm;
+}
+
+void add_s(){
+    comproc[$shamt] = comproc[insf->rd] + comproc[insf->rt];
+}
+
+void float_s(){
+    switch ($funct){
+        case 0:
+            add_s();
+            break;
+        default:
+            break;
+    }
 }
 
 void slti(){
@@ -202,6 +236,13 @@ void sw(){
     memory[(($rs + $imm) / 4)].raw = $rt;
 }
 
+void swcl(){
+    if(($rs + $imm) / 4 > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
+    memory[(($rs + $imm) / 4)].raw = comproc[insf->rt];
+}
 /*-----------------------------Type J-----------------------------------*/
 
 void j(){
