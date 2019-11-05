@@ -187,6 +187,32 @@ void lui(){
     $rd = $imm << 16;
 }
 
+void lbu(){
+    int aux = ($rs + $imm) / 4;
+    if(aux > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
+    int byte = ($rs + $imm) % 4;
+    switch (byte){
+        case 0:
+            $rt = memory[aux].byte_1;
+            break;
+        case 1:
+            $rt = memory[aux].byte_2;
+            break;
+        case 2:
+            $rt = memory[aux].byte_3;
+            break;
+        case 3:
+            $rt = memory[aux].byte_4;
+            break;
+        default:
+            break;
+    }
+    $rt = abs($rt);
+}
+
 void lw(){
     /* Caso eu aceese uma posição fora do vetor */
     if(($rs + $imm) / 4 > 4095){
@@ -225,6 +251,33 @@ void float_s(){
 
 void slti(){
     $rd = ($rs < $imm)? 1 : 0;
+}
+
+void sb(){
+    int aux = ($rs + $imm) / 4;
+    if(aux > 4095){
+        printf("Error: stack overflow\n");
+        end();
+    }
+    int byte = ($rs + $imm) % 4;
+
+    switch (byte){
+        case 0:
+            memory[aux].byte_1 = $rt;
+            break;
+        case 1:
+            memory[aux].byte_2 = $rt;
+            break;
+        case 2:
+            memory[aux].byte_3 = $rt;
+            break;
+        case 3:
+            memory[aux].byte_4 = $rt;
+            break;
+        default:
+            break;
+    }
+    
 }
 
 void sw(){

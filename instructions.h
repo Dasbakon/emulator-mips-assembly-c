@@ -95,6 +95,12 @@ void instruction_i(int instruction){
         case 35:
             lw();
             break;
+        case 36:
+            lbu();
+            break;
+        case 40:
+            sb();
+            break;
         case 43:
             sw();
             break;
