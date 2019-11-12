@@ -1,0 +1,432 @@
+.data
+
+msg_bemvindo: 	.asciiz "Bem-vindo a calculadora assembly\n"
+msg_opcao: 	.asciiz "Escolha uma opcao de operacao matematica ou digite 0 para sair\n1 - SOMA(inteiro)(a+b)\n2 - SUBTRACAO(inteiro)(a-b)\n3 - MULTIPLICACAO(inteiro)(a*b)\n4 - DIVISAO(inteiro)(a/b)\n5 - POTENCIACAO(a^b)\n" 
+msg_digitar1: 	.asciiz "Digite um numero:\n"
+msg_digitar2: 	.asciiz "Digite outro numero:\n"
+msg_adicao:	.asciiz " + "
+msg_subtracao: 	.asciiz " - "
+msg_mult:	.asciiz " x "
+msg_divisao:	.asciiz " : "
+msg_potencia: 	.asciiz " ^ "
+msg_igual:	.asciiz " = "
+pular_linha: 	.asciiz "\n"
+
+
+#variaveis
+opcao: .word 0
+num1: .word 0
+num2: .word 0
+resultado: .word 0
+float_num1: .float 0
+float_num2: .float 0
+float_result: .float 0
+
+.text
+
+main:
+	li $v0, 4
+	la $a0, msg_bemvindo
+	syscall
+
+loop:	
+	#OPCAO
+	li $v0, 4
+	la $a0, msg_opcao
+	syscall
+	
+	#LER OPCAO
+	li $v0, 5
+	syscall
+	sw $v0, opcao
+	
+	lw $t0, opcao
+	beq $t0, 0, fim
+	
+	jal operacao
+	
+	ble $t0, 5, print
+	bgt $t0, 5, print_float
+	
+fim:
+	#TERMINAR PROGRAMA
+	li $v0, 10
+	syscall
+	
+operacao:
+	#SWITCH OPCAO
+	beq $t0, 1, adicao
+	beq $t0, 2, subtracao
+	beq $t0, 3, multiplicacao
+	beq $t0, 4, divisao
+	beq $t0, 5, potenciacao
+	beq $t0, 6, adicao_float
+	beq $t0, 7, subtracao_float
+	beq $t0, 8, mult_float
+	beq $t0, 9, divisao_float
+
+adicao:
+	#LER INT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num2
+	
+	#CARREGAR VARIAVEIS
+	lw $t1, num1
+	lw $t2, num2
+	
+	add $t3, $t1, $t2
+	sw $t3, resultado
+	
+	jr $ra
+		
+	
+adicao_float:
+	#LER FLOAT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num2
+
+	#CARREGAR VARIAVEIS
+	lwc1 $f1, float_num1
+	lwc1 $f2, float_num2
+	
+	add.s $f3, $f1, $f2
+	swc1 $f3, float_result
+	
+	jr $ra
+	
+subtracao:
+	#LER INT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num2
+	
+	#CARREGAR VARIAVEIS
+	lw $t1, num1
+	lw $t2, num2
+	
+	sub $t3, $t1, $t2
+	sw $t3, resultado
+	
+	jr $ra		
+	
+subtracao_float:
+	#LER FLOAT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num2
+	
+	#CARREGAR VARIAVEIS
+	lwc1 $f1, float_num1
+	lwc1 $f2, float_num2
+	
+	sub.s $f3, $f1, $f2
+	swc1 $f3, float_result
+	
+	jr $ra
+	
+multiplicacao:
+	#LER INT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num2
+	
+	#CARREGAR VARIAVEIS
+	lw $t1, num1
+	lw $t2, num2
+	
+	mult $t1, $t2
+	mflo $t3
+	sw $t3, resultado
+	
+	jr $ra
+		
+mult_float:
+	#LER FLOAT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 6
+	syscall
+	swc1 $f0, float_num2
+	
+	#CARREGAR VARIAVEIS
+	lwc1 $f1, float_num1
+	lwc1 $f2, float_num2
+	
+	mul.s $f3, $f1, $f2
+	swc1 $f3, float_result
+	
+	jr $ra
+
+divisao:
+	#LER INT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num2
+
+	#CARREGAR VARIAVEIS
+	lw $t1, num1
+	lw $t2, num2
+	
+	div $t1, $t2
+	mflo $t3
+	sw $t3, resultado
+	
+	jr $ra
+	
+divisao_float:
+	#CARREGAR VARIAVEIS
+	lwc1 $f1, float_num1
+	lwc1 $f2, float_num2
+	
+	div.s $f3, $f1, $f2
+	swc1 $f3, float_result
+	
+	jr $ra
+	
+	
+potenciacao:
+	#LER INT PARA OPERACAO
+	li $v0, 4
+	la $a0, msg_digitar1
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num1
+	
+	li $v0, 4
+	la $a0, msg_digitar2
+	syscall
+	
+	li $v0, 5
+	syscall
+	sw $v0, num2
+	
+	#CARREGAR NUMEROS
+	lw $t1, num1
+	lw $t2, num2
+	lw $t4, num2
+	
+	beq $t2, 0, potencia_zero
+	beq $t2, 1, potencia_um
+	
+	add $t3, $zero, $t1
+	addi $t4, $t4, -1
+	
+loop_potencia:
+	blez $t4, fim_potencia
+	mult $t3, $t1
+	mflo $t3
+	addi $t4, $t4, -1
+	j loop_potencia
+	
+potencia_zero:
+	li $t3, 1
+	jr $ra
+	
+potencia_um:
+	add $t3, $zero, $t1
+	jr $ra
+
+fim_potencia:
+	jr $ra
+
+print:	
+	#IMPRIMIR PRIMEIRO NUMERO
+	li $v0, 1
+	add $a0, $zero, $t1  
+	syscall
+
+	jal print_operacao
+	
+	#IMPRIMIR SEGUNDO NUMERO
+	li $v0, 1
+	add $a0, $zero, $t2
+	syscall
+	
+	#IMPRIMIR IGUAL
+	li $v0, 4
+	la $a0, msg_igual
+	syscall
+	
+	#IMPRIMIR RESULLTADO
+	li $v0, 1
+	add $a0, $zero, $t3
+	syscall
+	
+	li $v0, 4
+	la $a0, pular_linha
+	syscall
+	
+	j loop
+			
+print_float: 
+	#IMPRIMIR PRIMEIRO NUMERO
+	li $v0, 2
+	add.s $f12, $f30, $f1  
+	syscall
+
+	jal print_operacao
+	
+	#IMPRIMIR SEGUNDO NUMERO
+	li $v0, 2
+	add.s $f12, $f30, $f2
+	syscall
+	
+	#IMPRIMIR IGUAL
+	li $v0, 4
+	la $a0, msg_igual
+	syscall
+	
+	#IMPRIMIR RESULLTADO
+	li $v0, 2
+	add.s $f12, $f30, $f3
+	syscall
+	
+	li $v0, 4
+	la $a0, pular_linha
+	syscall
+	
+	j loop
+	
+#IMPRIMIR OPERACAO
+print_operacao:
+	beq $t0, 1, adicionar_label
+	beq $t0, 2, subtrair_label
+	beq $t0, 3, multiplicar_label
+	beq $t0, 4, dividir_label
+	beq $t0, 5, potencia_label
+	beq $t0, 6, adicionar_label
+	beq $t0, 7, subtrair_label
+	beq $t0, 8, multiplicar_label
+	beq $t0, 9, dividir_label
+	
+	adicionar_label:
+		li $v0, 4
+		la $a0, msg_adicao
+		syscall
+	
+		jr $ra
+		
+		
+	subtrair_label:
+		li $v0, 4
+		la $a0, msg_subtracao
+		syscall
+		
+		jr $ra
+	
+	multiplicar_label:
+		li $v0, 4
+		la $a0, msg_mult
+		syscall
+		
+		jr $ra
+	
+	dividir_label:
+		li $v0, 4
+		la $a0, msg_divisao
+		syscall
+		
+		jr $ra
+	
+	potencia_label:
+		li $v0, 4
+		la $a0, msg_potencia
+		syscall
+		
+		jr $ra		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
